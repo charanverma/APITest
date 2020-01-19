@@ -24,5 +24,13 @@ namespace ApiUnitTest
 
 
         }
+
+        [Test]
+        public void Test3()
+        {
+            Assert.AreEqual("Charan", "Charan");
+
+
+        }
     }
 }
