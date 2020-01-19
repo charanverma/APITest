@@ -32,7 +32,7 @@ jobs:
       
     - name: dotnet publish 
       run: |
-        dotnet publish . -c Release -o myapp 
+        dotnet publish . -c Release -o neelam/myapp 
         
     - uses: azure/login@v1
       with:
