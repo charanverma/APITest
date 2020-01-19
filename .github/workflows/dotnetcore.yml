@@ -49,7 +49,7 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         
-        package: './../../../neelam/myapp/' 
+        package: '/home/runner/work/APITest/APITest/ApiTest/neelam/myapp/' 
 
     # Azure logout 
     - name: logout
