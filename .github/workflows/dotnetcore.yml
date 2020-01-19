@@ -2,22 +2,57 @@ name: .NET Core CI
 
 on: [push]
 
+env:
+  AZURE_WEBAPP_NAME: cloud5minsdemo   # set this to your application's name
+  AZURE_GROUP_NAME: cloud5mins2
+
 jobs:
-  build:
+  build and deployment:
 
     runs-on: ubuntu-latest
 
     steps:
+    
+    # checkout the repo
+    
     - uses: actions/checkout@v1
+      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.108
+    
+    # dotnet build and publish
+      
     - name: Build with dotnet
       run: dotnet build --configuration Release
       
     - name: run tests
       run: dotnet test --configuration Release
-          
       
+    - name: dotnet publish 
+      run: |
+        dotnet publish . -c Release -o myapp 
+        
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+    - run: |
+       az group create -n ${{ env.AZURE_GROUP_NAME }} -l eastus
+       az group deployment create -n ghaction -g ${{ env.AZURE_GROUP_NAME }} --template-file azuredepoy.json
+
+    # deploy web app using Azure credentials
+          
+    - name: 'Azure webapp deploy'
+      uses: azure/webapps-deploy@v1
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: 'myapp' 
+
+    # Azure logout 
+    - name: logout
+      run: |
+        az logout
+
       
