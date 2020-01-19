@@ -32,7 +32,7 @@ jobs:
       
     - name: dotnet publish 
       run: |
-        dotnet publish . -c Release -o neelam/myapp 
+        dotnet publish . -c Release -o ${{env.DOTNET_ROOT}}/myapp 
         
     - uses: azure/login@v1
       with:
@@ -49,7 +49,7 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         
-        package: '/home/runner/work/APITest/APITest/ApiTest/neelam/myapp/' 
+        package: ${{env.DOTNET_ROOT}}/myapp
 
     # Azure logout 
     - name: logout
