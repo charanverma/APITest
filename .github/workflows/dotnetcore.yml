@@ -7,7 +7,7 @@ env:
   AZURE_GROUP_NAME: cloud5mins2
 
 jobs:
-  build and deployment:
+  build-and-deploy:
 
     runs-on: ubuntu-latest
 
