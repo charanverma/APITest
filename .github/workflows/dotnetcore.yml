@@ -48,7 +48,8 @@ jobs:
       uses: azure/webapps-deploy@v1
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: './APITest/APITest/ApiTest/neelam/myapp/' 
+        
+        package: './../../../neelam/myapp/' 
 
     # Azure logout 
     - name: logout
