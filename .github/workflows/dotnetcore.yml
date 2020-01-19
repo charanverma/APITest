@@ -32,7 +32,7 @@ jobs:
       
     - name: dotnet publish 
       run: |
-        dotnet publish . -c Release -o myapp 
+        dotnet publish . -c Release -o neelam/myapp 
         
     - uses: azure/login@v1
       with:
@@ -40,7 +40,7 @@ jobs:
       
     - run: |
        az group create -n ${{ env.AZURE_GROUP_NAME }} -l eastus
-       az group deployment create -n ghaction -g ${{ env.AZURE_GROUP_NAME }} --template-file azuredepoy.json
+       az group deployment create -n ghaction -g ${{ env.AZURE_GROUP_NAME }} --template-file azuredepoy.json --parameters myWebAppName=${{ env.AZURE_WEBAPP_NAME }}
 
     # deploy web app using Azure credentials
           
@@ -48,7 +48,8 @@ jobs:
       uses: azure/webapps-deploy@v1
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: 'myapp' 
+        
+        package: '/home/runner/work/APITest/APITest/ApiTest/neelam/myapp/' 
 
     # Azure logout 
     - name: logout
